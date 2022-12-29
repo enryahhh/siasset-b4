@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Kategori;
+use App\Support\GeneratePrimaryHelper;
 
 class KategoriController extends Controller
 {
@@ -35,7 +37,27 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $kode = $this->generateKode();
+        $data = $request->validate([
+            'kategori' => ['required','unique:kategori,nama_kategori']
+        ],[
+            'required' => 'Kategori Tidak Boleh Kosong',
+            'unique' => 'Kategori tersebut sudah ada.'
+        ]);
+
+        $kategori = Kategori::create(['id_kategori'=>$kode,'nama_kategori'=>$data['kategori']]);
+        if($kategori){
+            $type = 'success';
+            $message = 'Berhasil Menambah Kategori';
+        }else{
+            $type = 'error';
+            $message = 'Gagal Menambah Kategori';
+        }
+        return redirect('kategori.index')->with('notif',
+        [
+            'type' => $type,
+            'message'=>$message
+        ]);
     }
 
     /**
@@ -81,5 +103,11 @@ class KategoriController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function generateKode(){
+        $id = Kategori::withTrashed()->select('id_kategori')->latest()->first();  
+        $primary = new GeneratePrimaryHelper('KT',$id);
+        return $primary->createCode();
     }
 }
