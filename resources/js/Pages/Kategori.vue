@@ -1,6 +1,6 @@
 <script setup>
 import BaseLayout from '../components/BaseLayout.vue';
-import InventoriesModal from '../components/InventoriesModal.vue';
+import KategoriModal from '../components/KategoriModal.vue';
 </script>
 <template>
     <BaseLayout>
@@ -12,7 +12,7 @@ import InventoriesModal from '../components/InventoriesModal.vue';
 
                         <div class="card-body">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                Launch static backdrop modal
+                                Launch kategori backdrop modal
                             </button>
 
                         </div>
@@ -21,7 +21,7 @@ import InventoriesModal from '../components/InventoriesModal.vue';
             </div>
     </div>
 
-    <InventoriesModal></InventoriesModal>
+    <KategoriModal></KategoriModal>
     </BaseLayout>
 </template>
 
